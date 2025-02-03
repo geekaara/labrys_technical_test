@@ -1,9 +1,10 @@
+// components/TokenTableRow.tsx
 import React from "react";
-import { CryptocurrencyListing } from "@/types"; // single import of your interface
+import { CoinMarketCapListing } from "@/types";
 import { formatCurrency, formatMarketCap, formatPercent } from "@/utils/format";
 
 type TokenTableRowProps = {
-  token: CryptocurrencyListing;
+  token: CoinMarketCapListing;
 };
 
 export default function TokenTableRow({ token }: TokenTableRowProps) {
@@ -16,7 +17,6 @@ export default function TokenTableRow({ token }: TokenTableRowProps) {
 
   return (
     <tr className="border-b hover:bg-gray-100 transition-colors">
-      {/* Token Name + (Optional) Icon */}
       <td className="py-2">
         <div className="flex items-center space-x-2">
           {/* <img src={`/icons/${symbol.toLowerCase()}.png`} alt={symbol} className="w-5 h-5" /> */}

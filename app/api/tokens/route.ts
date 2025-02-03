@@ -7,6 +7,7 @@ export async function GET() {
       "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=25&sort=market_cap",
       {
         headers: {
+          // In production, store this in process.env.CMC_API_KEY
           "X-CMC_PRO_API_KEY": process.env.CMC_API_KEY || "",
         },
       }

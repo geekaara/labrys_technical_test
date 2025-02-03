@@ -1,67 +1,97 @@
-import React from "react";
-import { useTokens } from "@/hooks/useTokens";
-import LoadingSpinner from "./LoadingSpinner";
+// components/TokenTable.tsx
+"use client";
+import React, { useState } from "react";
+import SearchBar from "./SearchBar";
 import TokenTableRow from "./TokenTableRow";
+import { CoinMarketCapListing } from "@/types";
+import { sortTokens, SortColumn, SortDirection } from "@/utils/sortTokens";
 
-export default function TokenTable() {
-  const {
-    tokens, // array of token items
-    isLoading, // bool
-    error, // string | null
-    hasMore, // bool
-    loadNextPage, // function to fetch the next batch
-  } = useTokens();
+interface TokenTableProps {
+  tokens: CoinMarketCapListing[];
+}
 
-  // If there's an error, show it
-  if (error) {
-    return <div className="text-red-600">Error fetching tokens: {error}</div>;
+export default function TokenTable({ tokens }: TokenTableProps) {
+  // Search query state
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Sorting state
+  const [sortColumn, setSortColumn] = useState<SortColumn>("marketCap");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
+
+  // Filter tokens by search
+  const filtered = tokens.filter((t) => {
+    const q = searchQuery.toLowerCase();
+    return (
+      t.name.toLowerCase().includes(q) || t.symbol.toLowerCase().includes(q)
+    );
+  });
+
+  // Sort tokens
+  const sorted = sortTokens(filtered, sortColumn, sortDirection);
+
+  // Click header to change sort
+  function handleHeaderClick(column: SortColumn) {
+    if (sortColumn === column) {
+      // Toggle direction
+      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortColumn(column);
+      setSortDirection("asc");
+    }
+  }
+
+  // Show arrow in the sorted column
+  function getSortArrow(col: SortColumn) {
+    if (col !== sortColumn) return null;
+    return sortDirection === "asc" ? "↑" : "↓";
   }
 
   return (
-    <div className="bg-white rounded-md shadow-sm p-4">
-      {/* Show a spinner during the initial fetch (if no tokens yet) */}
-      {isLoading && tokens.length === 0 && (
-        <div className="flex justify-center py-4">
-          <LoadingSpinner />
-        </div>
-      )}
+    <div className="bg-white p-4 rounded-md shadow-sm">
+      {/* Search Bar on top */}
+      <SearchBar onSearch={(val) => setSearchQuery(val)} />
 
-      {/* Table */}
       <table className="min-w-full table-auto">
         <thead>
           <tr className="border-b">
-            <th className="py-2 text-left">Name</th>
-            <th className="py-2 text-left">Symbol</th>
-            <th className="py-2 text-right">Market Cap</th>
-            <th className="py-2 text-right">Price (USD)</th>
-            <th className="py-2 text-right">24h</th>
+            <th
+              className="cursor-pointer py-2 text-left"
+              onClick={() => handleHeaderClick("name")}
+            >
+              Name {getSortArrow("name")}
+            </th>
+            <th
+              className="cursor-pointer py-2 text-left"
+              onClick={() => handleHeaderClick("symbol")}
+            >
+              Symbol {getSortArrow("symbol")}
+            </th>
+            <th
+              className="cursor-pointer py-2 text-right"
+              onClick={() => handleHeaderClick("marketCap")}
+            >
+              Market Cap {getSortArrow("marketCap")}
+            </th>
+            <th
+              className="cursor-pointer py-2 text-right"
+              onClick={() => handleHeaderClick("price")}
+            >
+              Price (USD) {getSortArrow("price")}
+            </th>
+            <th
+              className="cursor-pointer py-2 text-right"
+              onClick={() => handleHeaderClick("change24h")}
+            >
+              24h {getSortArrow("change24h")}
+            </th>
           </tr>
         </thead>
         <tbody>
-          {tokens.map((token) => (
+          {sorted.map((token) => (
             <TokenTableRow key={token.id} token={token} />
           ))}
         </tbody>
       </table>
-
-      {/* Show a spinner if we're fetching more (optional) */}
-      {isLoading && tokens.length > 0 && (
-        <div className="flex justify-center py-4">
-          <LoadingSpinner />
-        </div>
-      )}
-
-      {/* Load More Button */}
-      <div className="flex justify-center mt-4">
-        {hasMore && !isLoading && (
-          <button
-            onClick={loadNextPage}
-            className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
-          >
-            Load More
-          </button>
-        )}
-      </div>
     </div>
   );
 }

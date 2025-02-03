@@ -1,3 +1,4 @@
+// app/layout.tsx
 import React from "react";
 import "./globals.css";
 
