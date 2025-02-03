@@ -1,12 +1,9 @@
-// app/layout.tsx
-
+import React from "react";
 import "./globals.css";
-import { ReactQueryProvider } from "./react-query-provider";
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Top Crypto Tokens",
-  description: "View top cryptocurrencies by market cap",
+export const metadata = {
+  title: "Crypto Tracker",
+  description: "Track top cryptocurrencies by market cap",
 };
 
 export default function RootLayout({
@@ -16,12 +13,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-100 text-gray-800">
-        <ReactQueryProvider>
-          <main className="min-h-screen flex justify-center p-4">
-            <div className="w-full max-w-5xl">{children}</div>
-          </main>
-        </ReactQueryProvider>
+      <body className="bg-gray-50 text-gray-800">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <header className="mb-8">
+            <h1 className="text-3xl font-bold underline">Crypto Tracker</h1>
+          </header>
+          {children}
+        </div>
       </body>
     </html>
   );
