@@ -14,12 +14,3 @@ export interface CoinMarketCapListing {
     };
   };
 }
-
-// 2. The entire response object from CoinMarketCap
-export interface CoinMarketCapResponse {
-  data: CoinMarketCapListing[];
-  status: {
-    total_count: number;
-    // add other fields if needed
-  };
-}

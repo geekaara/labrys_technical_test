@@ -15,12 +15,9 @@ type TokenData = {
   };
 };
 
-// Map from symbol to icon filename from the cryptocurrency-icons package
-// For demonstration, you could place the icons in /public/crypto-icons
 const iconMapper: Record<string, string> = {
   BTC: "/crypto-icons/color/btc.png",
   ETH: "/crypto-icons/color/eth.png",
-  // Add more if needed, or handle fallback logic
 };
 
 export function TokenRow({ token }: { token: TokenData }) {
