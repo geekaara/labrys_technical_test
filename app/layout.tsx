@@ -14,10 +14,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-50 text-gray-800">
+      <body className="bg-black text-white">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <header className="mb-8">
-            <h1 className="text-3xl font-bold underline">Crypto Tracker</h1>
+            <h1 className="text-3xl font-bold text-white">AssetTracker</h1>
+            <p className="text-gray-600 text-white">
+              Track your favourite crypto assets
+            </p>
           </header>
           {children}
         </div>

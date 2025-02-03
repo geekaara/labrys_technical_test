@@ -2,6 +2,7 @@
 import React from "react";
 import { CoinMarketCapListing } from "@/types";
 import { formatCurrency, formatMarketCap, formatPercent } from "@/utils/format";
+import Image from "next/image";
 
 type TokenTableRowProps = {
   token: CoinMarketCapListing;
@@ -16,10 +17,15 @@ export default function TokenTableRow({ token }: TokenTableRowProps) {
   const isPositive = change24h >= 0;
 
   return (
-    <tr className="border-b hover:bg-gray-100 transition-colors">
+    <tr className="border-b hover:bg-gray-700 transition-colors">
       <td className="py-2">
         <div className="flex items-center space-x-2">
-          {/* <img src={`/icons/${symbol.toLowerCase()}.png`} alt={symbol} className="w-5 h-5" /> */}
+          <Image
+            src={`/crypto-icons/${symbol.toLowerCase()}.svg`}
+            alt={symbol}
+            width={20}
+            height={20}
+          />
           <span>{name}</span>
         </div>
       </td>

@@ -47,13 +47,13 @@ export default function TokenTable({ tokens }: TokenTableProps) {
   }
 
   return (
-    <div className="bg-white p-4 rounded-md shadow-sm">
+    <div className="bg-black p-4 rounded-md shadow-sm">
       {/* Search Bar on top */}
       <SearchBar onSearch={(val) => setSearchQuery(val)} />
 
       <table className="min-w-full table-auto">
         <thead>
-          <tr className="border-b">
+          <tr className="border-b hover:bg-gray-700 transition-colors">
             <th
               className="cursor-pointer py-2 text-left"
               onClick={() => handleHeaderClick("name")}
@@ -82,7 +82,7 @@ export default function TokenTable({ tokens }: TokenTableProps) {
               className="cursor-pointer py-2 text-right"
               onClick={() => handleHeaderClick("change24h")}
             >
-              24h {getSortArrow("change24h")}
+              24h % {getSortArrow("change24h")}
             </th>
           </tr>
         </thead>
